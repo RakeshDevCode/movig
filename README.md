@@ -1,6 +1,8 @@
 # Netflix GPT
 -  Create React App
 - configured Tailwind
+- Header
+- Login Form
 
   - Title and Description
   - Movie Suggestion

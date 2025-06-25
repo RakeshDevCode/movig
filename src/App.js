@@ -1,11 +1,8 @@
-import './App.css';
+import Body from "./components/Body";
+
 
 function App() {
-  return (
-    <div className="font-bold underline color-red hover:cursor-pointer">
-      netflix gpt
-    </div>
-  );
+  return <Body/>;
 }
 
 export default App;
