@@ -3,6 +3,9 @@
 - configured Tailwind
 - Header
 - Login Form
+- Sign Up Form
+- form Validation
+- useRef Hook
 
   - Title and Description
   - Movie Suggestion
