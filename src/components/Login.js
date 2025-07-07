@@ -1,10 +1,17 @@
   import React, { useRef, useState } from "react";
   import Header from "./Header";
   import { checkValidData } from "../utils/Validate";
+  import { signInWithEmailAndPassword,createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+  import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
   const Login = () => {
     const[isSignInForm, setSignInForm]=useState(true);
     const [errorMessage,setErrorMessage]=useState(null);
+    const navigate= useNavigate();
+    const dispatch = useDispatch(); 
 
     const name=useRef(null);  
     const email=useRef(null);
@@ -12,12 +19,65 @@
 
     const handleButtonClick=()=>{
       //validate the form data
-      console.log(name.current.value,email.current.value,password.current.value);
-
-      const message =checkValidData(name.current.value,email.current.value,password.current.value);
+      //console.log(name.current.value,email.current.value,password.current.value);
+      let message;
+      if (isSignInForm){
+      message =checkValidData("",email.current?.value,password.current?.value);
+      } 
+      else {
+      message = checkValidData(name.current?.value, email.current?.value, password.current?.value);
+      }
       setErrorMessage(message);
+      if(message) return;
+
+      if(!isSignInForm){
+       // Sign up logic
+       createUserWithEmailAndPassword(auth,email.current.value,password.current.value)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    updateProfile(user, {
+  displayName: name.current.value, photoURL: "https://avatars.githubusercontent.com/u/146819010?v=4"
+}).then(() => {
+  const {uid, email,displayName, photoURL} = auth.currentUser;
+      dispatch(addUser({uid: uid, email: email,displayName: displayName, photoURL: photoURL }));
+      
+  // Profile updated! 
+  navigate("/browse");
+}).catch((error) => {
+  // An error occurred
+  setErrorMessage(error.message);
+});
+    console.log(user);
+    navigate("/browse");
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setErrorMessage(errorCode+"-"+errorMessage);
+    // ..
+  });
+      }
+      else {
+      // sign in logic
+      signInWithEmailAndPassword(auth, email.current.value,password.current.value)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    console.log(user);
+    navigate("/browse");
     
-    }
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setErrorMessage(errorCode+"-"+errorMessage)
+  });
+
+      }
+    };
+
     const toggleSignInForm=()=>{
       setSignInForm(!isSignInForm)
 
@@ -27,7 +87,7 @@
         <Header />
         <div className="absolute">
           <img
-            src="https://assets.nflxext.com/ffe/siteui/vlv3/8200f588-2e93-4c95-8eab-ebba17821657/web/IN-en-20250616-TRIFECTA-perspective_9cbc87b2-d9bb-4fa8-9f8f-a4fe8fc72545_large.jpg"
+            src="/bg.jpg"
             alt="logo"
           />
         </div>
@@ -36,19 +96,19 @@
             <h1 className="font-bold  p-2 m-2">{isSignInForm? "Sign In": "Sign Up"}</h1>
             {!isSignInForm && <input
               ref={name}
-              type="text "
+              type="text"
               placeholder="Full Name"
               className="p-4 my-4 w-full bg-gray-700"
             />}
             <input
               ref={email}
-              type="text "
+              type="text"
               placeholder="Email or Mobile number"
               className="p-4 my-4 w-full bg-gray-700 "
             />
             <input
               ref={password}
-              type="password "
+              type="password"
               placeholder="password"
               className="p-4 my-4 w-full bg-gray-700"
             />

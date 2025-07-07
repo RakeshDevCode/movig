@@ -1,4 +1,4 @@
-# Netflix GPT
+# Movig GPT
 -  Create React App
 - configured Tailwind
 - Header
@@ -6,11 +6,16 @@
 - Sign Up Form
 - form Validation
 - useRef Hook
+- Firebase Setup
+- Firebase deploy
+- Create sign up user Account
+- Impliment sign up user api
+- created Redux store with userslice
 
   - Title and Description
   - Movie Suggestion
   - Movies list 
-# netflix GPT
+# Movig GPT
 -  Search Bar
 -  Movie Suggestions
 
