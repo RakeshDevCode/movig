@@ -1,8 +1,0 @@
-firebase login
-firebase init 
-firebase deploy
-
-
-35000 rent non metro 420000
-basic 65430  net 785160
-hra 32715 net 392580
