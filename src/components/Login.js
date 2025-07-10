@@ -9,6 +9,7 @@ import {
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BackGroundImage, USER_AVATAR } from "../utils/constants";
 
 const Login = () => {
   const [isSignInForm, setSignInForm] = useState(true);
@@ -51,7 +52,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL: "user-icon.jpg",
+            photoURL: {USER_AVATAR},
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
@@ -105,7 +106,7 @@ const Login = () => {
     <div>
       <Header />
       <div className="absolute">
-        <img src="/bg.jpg" alt="logo" />
+        <img src={BackGroundImage} alt="logo" />
       </div>
       <div>
         <form
