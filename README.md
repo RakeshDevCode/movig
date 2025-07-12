@@ -24,10 +24,10 @@
 - update Store with movie data
 - Update Store with movies Data
 - Planning for MainConatiner & secondary container
-- Fetch data for Trailer video
+- Fetch data for Trailer video 
 - Update Store with Trailer video Data
 - Embedded the youtube video and make it Autoplay and mute
-- Tailwind Classes to make it look awesome
+- Tailwind Classes to make it look awesome Design
 
 
 
