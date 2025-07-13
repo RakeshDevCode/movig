@@ -21,8 +21,6 @@ const Login = () => {
   const password = useRef(null);
 
   const handleButtonClick = () => {
-    //validate the form data
-    //console.log(name.current.value,email.current.value,password.current.value);
     let message;
     if (isSignInForm) {
       message = checkValidData(
@@ -41,14 +39,12 @@ const Login = () => {
     if (message) return;
 
     if (!isSignInForm) {
-      // Sign up logic
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
         password.current.value
       )
         .then((userCredential) => {
-          // Signed up
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value,
@@ -64,37 +60,29 @@ const Login = () => {
                   photoURL: photoURL,
                 })
               );
-
-              // Profile updated!
             })
             .catch((error) => {
-              // An error occurred
               setErrorMessage(error.message);
             });
-          console.log(user);
-          // ...
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          setErrorMessage(errorCode + "-" + errorMessage);
-          // ..
+          setErrorMessage(errorCode + " - " + errorMessage);
         });
     } else {
-      // sign in logic
       signInWithEmailAndPassword(
         auth,
         email.current.value,
         password.current.value
       )
         .then((userCredential) => {
-          // Signed in
           const user = userCredential.user;
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          setErrorMessage(errorCode + "-" + errorMessage);
+          setErrorMessage(errorCode + " - " + errorMessage);
         });
     }
   };
@@ -102,50 +90,64 @@ const Login = () => {
   const toggleSignInForm = () => {
     setSignInForm(!isSignInForm);
   };
+
   return (
-    <div>
+    <div className="relative min-h-screen">
       <Header />
-      <div className="absolute">
-        <img src={BackGroundImage} alt="logo" />
+      <div className="absolute inset-0 -z-10">
+        <img
+          src={BackGroundImage}
+          alt="background"
+          className="w-full h-full object-cover"
+        />
       </div>
-      <div>
+      <div className="flex justify-center items-center min-h-screen ">
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="absolute p-12 bg-black w-3/12  my-14 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-80"
+          className="bg-black bg-opacity-80 text-white rounded-lg p-8 sm:p-12 w-11/12 sm:w-3/4 md:w-2/4 lg:w-3/12"
         >
-          <h1 className="text-3xl font-bold p-2 m-2 ">
+          <h1 className="text-2xl sm:text-3xl font-bold p-2 text-center">
             {isSignInForm ? "Sign In" : "Sign Up"}
           </h1>
+
           {!isSignInForm && (
             <input
               ref={name}
               type="text"
               placeholder="Full Name"
-              className="p-4 my-4 w-full bg-gray-700"
+              className="p-4 my-3 w-full bg-gray-700 rounded"
             />
           )}
+
           <input
             ref={email}
             type="text"
-            placeholder="Enter your Email ID "
-            className="p-4 my-4 w-full bg-gray-700 "
+            placeholder="Enter your Email ID"
+            className="p-4 my-3 w-full bg-gray-700 rounded"
           />
+
           <input
             ref={password}
             type="password"
-            placeholder="password"
-            className="p-4 my-4 w-full bg-gray-700"
+            placeholder="Password"
+            className="p-4 my-3 w-full bg-gray-700 rounded"
           />
-          <p className="text-red-600 font-bold text-lg py-2">{errorMessage}</p>
+
+          <p className="text-red-600 font-bold text-sm sm:text-lg py-2">
+            {errorMessage}
+          </p>
+
           <button
-            className="p-4 my-6 bg-red-700 font-bold w-full rounded-lg"
+            className="p-3 sm:p-4 my-4 bg-red-700 font-bold w-full rounded-lg"
             onClick={handleButtonClick}
           >
             {isSignInForm ? "Sign In" : "Sign Up"}
           </button>
-          <p className="text-center">Or </p>
+
+          <p className="text-center">Or</p>
+
           <p
-            className="p-4 m-4 w-full hover:cursor-pointer"
+            className="text-center text-sm sm:text-base mt-4 hover:cursor-pointer"
             onClick={toggleSignInForm}
           >
             {isSignInForm ? (
@@ -155,7 +157,7 @@ const Login = () => {
               </>
             ) : (
               <>
-                <span className="text-gray-400">Already registred, </span>
+                <span className="text-gray-400">Already registered? </span>
                 <span className="font-bold">Sign In Now</span>
               </>
             )}
