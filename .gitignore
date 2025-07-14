@@ -24,5 +24,17 @@ yarn-error.log*
 
 ./node_modules/.cache/default-development/4.pack
 
-# Ignore firebase config file 
-src/utils/firebase.js
+#env 
+server/.env
+.env
+
+server/node_modules/.cache/default-development/16.pack
+server/node_modules/.cache/default-development/7.pack
+server/node_modules/.cache/default-development/9.pack
+
+node_modules/.cache/
+
+
+
+
+
