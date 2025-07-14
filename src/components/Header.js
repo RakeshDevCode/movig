@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import React,{ useEffect } from 'react';
 import { LOGO } from "../utils/constants";
+import { toggleGptSearchView } from "../utils/gptSlice";
 
 const Header = () => {
   const dispatch=useDispatch();
@@ -37,7 +38,11 @@ const Header = () => {
      return () => unsubscribe(); // cleanup on unmount
   },[dispatch]);
 
-  const handleGptSearchClick= ()=>{}
+  const handleGptSearchClick= ()=>{
+    //toggle Gpt search 
+    dispatch(toggleGptSearchView());
+    
+  }
 
   return (
     <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black  z-10 flex justify-between">
