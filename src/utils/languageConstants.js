@@ -1,5 +1,5 @@
 
-export const lang = {
+const lang = {
     en: {
         search : "Search",
         GptSearchPlaceholder: "What would you like to watch today?"
@@ -12,5 +12,6 @@ export const lang = {
         search : "Buscar",
         GptSearchPlaceholder: "¿Qué te gustaría ver hoy?"
     },
-    
 }
+
+export default lang;

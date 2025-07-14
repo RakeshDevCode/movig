@@ -35,9 +35,11 @@
 - Made the Browse page  with tailwind CSS
 - usePopularMovies Custom hook
 - useTopRatedMovies Custom hook
+- GPT Search Page
+- GPT Search Bar 
+- Multi Language feature in our App
 
-
-  - Title and Description
+- Title and Description
   - Movie Suggestion
   - Movies list 
 # Movig GPT
