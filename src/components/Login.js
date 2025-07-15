@@ -26,13 +26,13 @@ const Login = () => {
       message = checkValidData(
         "",
         email.current?.value,
-        password.current?.value
+        password.current?.value,
       );
     } else {
       message = checkValidData(
         name.current?.value,
         email.current?.value,
-        password.current?.value
+        password.current?.value,
       );
     }
     setErrorMessage(message);
@@ -42,7 +42,7 @@ const Login = () => {
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
-        password.current.value
+        password.current.value,
       )
         .then((userCredential) => {
           const user = userCredential.user;
@@ -58,7 +58,7 @@ const Login = () => {
                   email: email,
                   displayName: displayName,
                   photoURL: photoURL,
-                })
+                }),
               );
             })
             .catch((error) => {
@@ -74,7 +74,7 @@ const Login = () => {
       signInWithEmailAndPassword(
         auth,
         email.current.value,
-        password.current.value
+        password.current.value,
       )
         .then((userCredential) => {
           const user = userCredential.user;

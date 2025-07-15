@@ -1,9 +1,9 @@
 // server/local-server.mjs
 
-import 'dotenv/config'; // Auto-loads .env file
-import express from 'express';
-import cors from 'cors';
-import OpenAI from 'openai';
+import "dotenv/config"; // Auto-loads .env file
+import express from "express";
+import cors from "cors";
+import OpenAI from "openai";
 
 const app = express();
 const port = 3001;

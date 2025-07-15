@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const GptMovieSuggestions = () => {
-  return (
-    <div>GptMovieSuggestions</div>
-  )
-}
+  return <div>GptMovieSuggestions</div>;
+};
 
-export default GptMovieSuggestions
+export default GptMovieSuggestions;

@@ -21,13 +21,12 @@ app.post("/api/gpt-search", async (req, res) => {
   try {
     const { messages } = req.body;
 
-    console.log("Received GPT Messages:", messages); 
+    console.log("Received GPT Messages:", messages);
 
     const gptResponse = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo", 
+      model: "gpt-3.5-turbo",
       messages,
-      max_tokens: 100, 
-
+      max_tokens: 100,
     });
 
     res.json({

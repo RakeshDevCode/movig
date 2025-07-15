@@ -1,19 +1,21 @@
+export const checkValidData = (name, email, password) => {
+  if (name !== "") {
+    const isNameValid = /^[a-zA-Z '.-]*[A-Za-z][^#?!@$%^&*-/]$/.test(name);
+    if (!isNameValid) return "Name is not valid";
+  }
 
-export const checkValidData=(name,email,password)=>{
+  const isEmailValid = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(
+    email,
+  );
 
-     if (name !== "") {
-        const isNameValid = /^[a-zA-Z '.-]*[A-Za-z][^#?!@$%^&*-/]$/.test(name);
-        if (!isNameValid) return "Name is not valid";
-    }
+  const isPasswordValid =
+    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(
+      password,
+    );
 
-    const isEmailValid=/^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(email);
+  if (!isEmailValid) return "Email is not valid";
 
-    const isPasswordValid= /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(password);
+  if (!isPasswordValid) return "password is Wrong";
 
-    if(!isEmailValid) return "Email is not valid";
-
-    if(!isPasswordValid)  return "password is Wrong";
-
-    return null;
-
-}
+  return null;
+};

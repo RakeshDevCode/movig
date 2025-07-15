@@ -22,5 +22,3 @@ export const SUPPORTED_LANGUAGE = [
 ];
 
 //  export const OPENAI_KEY =  "";
-
-  

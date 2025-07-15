@@ -34,7 +34,7 @@ const Header = () => {
             email: email,
             displayName: displayName,
             photoURL: photoURL,
-          })
+          }),
         );
         navigate("/browse");
       } else {
@@ -83,8 +83,15 @@ const Header = () => {
               {showGptSearch ? "Home" : "GPT Search"}
             </button>
 
-            <img className="w-10 h-10 rounded-full" alt="usericon" src={user.photoURL} />
-            <button onClick={handleSignOut} className="font-bold text-white text-sm sm:text-base">
+            <img
+              className="w-10 h-10 rounded-full"
+              alt="usericon"
+              src={user.photoURL}
+            />
+            <button
+              onClick={handleSignOut}
+              className="font-bold text-white text-sm sm:text-base"
+            >
               (Sign Out)
             </button>
           </div>
