@@ -16,7 +16,7 @@ const GptSearchBar = () => {
     setGptResults("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/gpt-search", {
+      const res = await fetch("/api/gpt-search", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
