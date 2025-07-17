@@ -8,26 +8,23 @@ const GptMovieSuggestions = () => {
   if (!movieNames) return null;
 
   return (
-    <div className="p-2 m-2 sm:p-4 sm:m-4 text-white">
-      <div>
-        {/* GPT Results */}
-        {movieResults && (
-          <div className="bg-black mt-0 sm:mt-6 p-0 sm:p-6 w-full max-w-3xl rounded-lg shadow-md whitespace-pre-line text-white leading-relaxed">
-            <h1 className="text-xl font-semibold mb-2 text-white">
-              🎬 Recommended Movies:
-            </h1>
-            <div>
-              {movieNames.map((name, index) => (
-                <MovieList
-                  key={index}
-                  title={name}
-                  movies={movieResults[index]}
-                />
-              ))}
-            </div>
+    <div className="px-4 sm:px-8 py-6 w-full max-w-screen-2xl mx-auto">
+      {movieResults && (
+        <div className="bg-black bg-opacity-70 rounded-lg shadow-md p-4 sm:p-6">
+          <h1 className="text-lg sm:text-2xl font-semibold mb-4 text-white">
+            🎬 Recommended Movies:
+          </h1>
+          <div className="space-y-6">
+            {movieNames.map((name, index) => (
+              <MovieList
+                key={index}
+                title={name}
+                movies={movieResults[index]}
+              />
+            ))}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
