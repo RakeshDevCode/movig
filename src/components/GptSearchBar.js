@@ -1,12 +1,27 @@
 import React, { useRef, useState } from "react";
 import lang from "../utils/languageConstants";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { API_OPTIONS } from "../utils/constants";
+import { addGptMovieResult } from "../utils/gptSlice";
 
 const GptSearchBar = () => {
+  const dispatch = useDispatch();
   const langKey = useSelector((store) => store.config.lang);
   const searchText = useRef(null);
   const [gptResults, setGptResults] = useState(""); // <-- Store GPT output here
   const [loading, setLoading] = useState(false);
+
+  //Search Movies in TMDB by API Call
+  const searchMovieTMDB = async (movie) => {
+    const data = await fetch(
+      "https://api.themoviedb.org/3/search/movie?query=" +
+        movie.trim() + // trim to avoid extra spaces
+        "&include_adult=false&language=en-US&page=1",
+      API_OPTIONS
+    );
+    const json = await data.json();
+    return json.results;
+  };
 
   const handleGptSearchClick = async () => {
     const userMessage = searchText.current.value;
@@ -29,7 +44,7 @@ const GptSearchBar = () => {
             {
               role: "system",
               content:
-                "You are a movie recommendation engine. Respond with only a numbered list of movie titles and release years in this format: Movie Name (Year). Do not include any description or additional details.",
+                "You are a movie recommendation engine. Respond with only movies title name, with comma seperated like the example result given ahead .Example: Sholay, Deewaar, Don, Kaala, Mr. Natwarlal . Do not include any description or additional details. ",
             },
             { role: "user", content: userMessage },
           ],
@@ -38,6 +53,17 @@ const GptSearchBar = () => {
 
       const data = await res.json();
       setGptResults(data.response);
+
+      // API results
+      const gptMovies = data.response.split(",");
+      console.log("GPT Result Movies:", gptMovies);
+      const promiseArray = gptMovies.map((movie) => searchMovieTMDB(movie));
+      const tmdbResults = await Promise.all(promiseArray);
+      console.log(tmdbResults);
+
+      dispatch(
+        addGptMovieResult({ movieNames: gptMovies, movieResults: tmdbResults })
+      );
     } catch (error) {
       console.error("GPT Error:", error);
       setGptResults("⚠️ Something went wrong. Please try again.");
@@ -47,7 +73,7 @@ const GptSearchBar = () => {
   };
 
   return (
-    <div className="pt-[28%] sm:pt-[10%] flex flex-col items-center px-4">
+    <div className="pt-[35%] sm:pt-[10%] flex flex-col items-center px-4">
       {/* Search Bar */}
       <form
         className="bg-black w-full max-w-3xl grid grid-cols-12 rounded-lg shadow-md"
@@ -66,16 +92,6 @@ const GptSearchBar = () => {
           {loading ? "Searching..." : lang[langKey].search}
         </button>
       </form>
-
-      {/* GPT Results */}
-      {gptResults && (
-        <div className="bg-black mt-6 p-6 w-full max-w-3xl rounded-lg shadow-md whitespace-pre-line text-white leading-relaxed">
-          <h2 className="text-xl font-semibold mb-2 text-white">
-            🎬 Recommended Movies:
-          </h2>
-          <p>{gptResults}</p>
-        </div>
-      )}
     </div>
   );
 };
