@@ -10,7 +10,7 @@ const GptMovieSuggestions = () => {
   return (
     <div className="px-4 sm:px-8 py-6 w-full max-w-screen-2xl mx-auto">
       {movieResults && (
-        <div className="bg-black bg-opacity-70 rounded-lg shadow-md p-4 sm:p-6">
+        <div className="bg-black bg-opacity-90 rounded-lg shadow-md p-4 sm:p-6">
           <h1 className="text-lg sm:text-2xl font-semibold mb-4 text-white">
             🎬 Recommended Movies:
           </h1>

@@ -5,12 +5,14 @@ import VideoBackground from "./VideoBackground";
 
 const MainContainer = () => {
   const movies = useSelector((store) => store.movies?.nowPlayingMovies);
+  const mainMovie = useSelector((store) => store.movies?.mainMovie);
 
-  if (!movies) return null;
+  if (!movies || movies.length === 0) return null;
 
-  const mainMovie = movies[0];
+  // If mainMovie exists (set from MovieDetails), use it; else default to first nowPlaying movie
+  const movieToShow = mainMovie || movies[0];
 
-  const { original_title, overview, id } = mainMovie;
+  const { original_title, overview, id } = movieToShow;
 
   return (
     <div className="relative">
