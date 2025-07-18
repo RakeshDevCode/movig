@@ -21,8 +21,6 @@ app.post("/api/gpt-search", async (req, res) => {
   try {
     const { messages } = req.body;
 
-    console.log("Received GPT Messages:", messages);
-
     const gptResponse = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages,

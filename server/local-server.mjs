@@ -33,10 +33,6 @@ app.post("/api/gpt-search", async (req, res) => {
       response: gptResponse.choices[0].message.content,
     });
     const gptText = gptResponse.choices[0].message.content?.trim();
-
-    // ✅ Log GPT response clearly
-    console.log("\n🎬 GPT Movie Suggestions (raw):");
-    console.log(gptText);
   } catch (error) {
     console.error("OpenAI API Error:", error);
     res.status(500).json({ error: error.message });

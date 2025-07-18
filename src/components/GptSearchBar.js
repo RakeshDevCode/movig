@@ -17,7 +17,7 @@ const GptSearchBar = () => {
       "https://api.themoviedb.org/3/search/movie?query=" +
         movie.trim() + // trim to avoid extra spaces
         "&include_adult=false&language=en-US&page=1",
-      API_OPTIONS
+      API_OPTIONS,
     );
     const json = await data.json();
     return json.results;
@@ -56,13 +56,11 @@ const GptSearchBar = () => {
 
       // API results
       const gptMovies = data.response.split(",");
-      console.log("GPT Result Movies:", gptMovies);
       const promiseArray = gptMovies.map((movie) => searchMovieTMDB(movie));
       const tmdbResults = await Promise.all(promiseArray);
-      console.log(tmdbResults);
 
       dispatch(
-        addGptMovieResult({ movieNames: gptMovies, movieResults: tmdbResults })
+        addGptMovieResult({ movieNames: gptMovies, movieResults: tmdbResults }),
       );
     } catch (error) {
       console.error("GPT Error:", error);
