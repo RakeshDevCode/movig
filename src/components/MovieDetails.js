@@ -9,10 +9,9 @@ const MovieDetails = () => {
   const movie = useSelector((state) => state.movies.selectedMovie);
   const trailer = useSelector((state) => state.movies.trailerVideo);
   const [showPlayer, setShowPlayer] = useState(false);
+  const [showFullOverview, setShowFullOverview] = useState(false);
 
-  // ✅ Valid use of hook: outside condition but guarded
   useMovieTrailer(movie?.id);
-
   if (!movie) return null;
 
   const handleClose = () => {
@@ -37,7 +36,6 @@ const MovieDetails = () => {
               className="w-full h-full"
               src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1&rel=0`}
               title="YouTube Trailer"
-              frameBorder="0"
               allow="autoplay; encrypted-media"
               allowFullScreen
             />
@@ -53,8 +51,8 @@ const MovieDetails = () => {
 
       {/* Movie Details Modal */}
       {!showPlayer && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-70">
-          <div className="relative bg-gray-900 text-white p-6 rounded-lg shadow-xl max-w-4xl w-full mx-4">
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-70 px-2">
+          <div className="relative bg-gray-900 text-white p-4 md:p-6 rounded-lg shadow-xl max-w-4xl w-full overflow-y-auto max-h-[95vh]">
             <button
               onClick={handleClose}
               className="absolute top-2 right-2 text-white text-2xl font-bold hover:text-red-500"
@@ -66,13 +64,32 @@ const MovieDetails = () => {
               <img
                 src={IMG_CDN_URL + movie.poster_path}
                 alt={movie.title}
-                className="w-full md:w-64 rounded-lg shadow-lg"
+                className="w-[80%] md:w-64 rounded-lg shadow-lg mb-4 md:mb-0"
               />
-              <div className="md:ml-6 mt-4 md:mt-0 flex flex-col justify-between">
+              <div className="md:ml-6 flex flex-col justify-between">
                 <div>
-                  <h2 className="text-3xl font-bold mb-2">{movie.title}</h2>
-                  <p className="text-gray-300 mb-4">{movie.overview}</p>
-                  <div className="flex flex-wrap gap-4 text-sm">
+                  <h2 className="text-2xl md:text-3xl font-bold mb-2">
+                    {movie.title}
+                  </h2>
+
+                  {/* Overview with line clamp on mobile */}
+                  <p
+                    className={`text-gray-300 mb-2 ${
+                      !showFullOverview ? "line-clamp-2" : ""
+                    }`}
+                  >
+                    {movie.overview}
+                  </p>
+                  {movie.overview.length > 100 && (
+                    <button
+                      onClick={() => setShowFullOverview(!showFullOverview)}
+                      className="text-purple-400 text-sm mb-4"
+                    >
+                      {showFullOverview ? "Show Less" : "Load More"}
+                    </button>
+                  )}
+
+                  <div className="flex flex-wrap gap-4 text-sm mb-2">
                     <p>
                       <strong>Rating:</strong> {movie.vote_average}
                     </p>
@@ -85,10 +102,11 @@ const MovieDetails = () => {
                     </p>
                   </div>
                 </div>
-                <div className="mt-6">
+
+                <div className="mt-4 md:mt-6">
                   <button
                     onClick={handleWatchTrailer}
-                    className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg shadow-md"
+                    className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg shadow-md w-full md:w-auto"
                   >
                     Watch Trailer
                   </button>
